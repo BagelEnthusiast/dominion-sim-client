@@ -18,7 +18,8 @@ function App() {
       .then(res => {
         // The response has an `any` type, so we need to cast
         // it to the `User` type, and return it from the promise
-        return res as Users[]
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        return res.users as Users[]
       })
   }
 
@@ -27,6 +28,8 @@ function App() {
     .then(users => {
       console.log('users: ', users)
       users.forEach(user => {
+        // eslint-disable-next-line no-debugger
+        console.log('hitting inside loop')
         setList(oldArray => [...oldArray, user.name]);
       })
     })
