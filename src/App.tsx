@@ -1,41 +1,39 @@
 import { useState, useEffect } from 'react'
 
+interface ApiData {
+  users: User[];
+}
+
+interface User {
+  name: string
+  age: string
+}
+
+async function getUsersAsync(): Promise<User[]> {
+  // For now, consider the data is stored on a static `users.json` file
+  const response = await fetch('http://localhost:3000/api')
+  const apiData = (await response.json()) as unknown as ApiData
+  return apiData.users
+}
+
 function App() {
-  interface Users {
-    name: string
-    age: string
-  }
 
-  const [list, setList] = useState<string[]>([]);
-
-
-
-  function getUsers(): Promise<Users[]> {
-    // For now, consider the data is stored on a static `users.json` file
-    return fetch('http://localhost:3000/api')
-      // the JSON body is taken from the response
-      .then(res => res.json())
-      .then(res => {
-        // The response has an `any` type, so we need to cast
-        // it to the `User` type, and return it from the promise
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        return res.users as Users[]
-      })
-  }
+  const [list, setList] = useState<string[] | undefined>();
 
   useEffect(() => {
-    void getUsers()
-    .then(users => {
-      console.log('users: ', users)
-      users.forEach(user => {
-        // eslint-disable-next-line no-debugger
-        console.log('hitting inside loop')
-        setList(oldArray => [...oldArray, user.name]);
+    console.log('useEffect');
+    getUsersAsync()
+      .then(users => {
+        const names = users.map(u => u.name);
+        setList(names);
       })
-    })
+      .catch(err => console.log(err));
   }, []);
 
  
+  if (!list) {
+    return <h1>loading</h1>;
+  }
   
   return (
     <>
