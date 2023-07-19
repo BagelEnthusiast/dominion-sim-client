@@ -11,6 +11,9 @@ interface User {
   age: string
 }
 
+interface imageComponent {
+  default: string
+}
 
 
 async function getUsersAsync(): Promise<User[]> {
@@ -21,11 +24,11 @@ async function getUsersAsync(): Promise<User[]> {
 
 function App() {
   const [list, setList] = useState<string[] | undefined>();
-  const [images, setImages] = useState<string[] | undefined>()
+  const [images, setImages] = useState<imageComponent[] | undefined>()
 
   useEffect(() => {
     async function importImages() {
-      const imagePaths = ['./public/artisan.jpg', './public/bandit.jpg'];
+      const imagePaths = ['./public/artisan.jpg', './public/bandit.jpg', './public/bureaucrat.jpg', './public/cellar.jpg'];
 
       const importPromises = imagePaths.map((path) => import(path));
       const importedImages = await Promise.all(importPromises);
@@ -61,9 +64,10 @@ function App() {
       }
       {images && 
       images.map((image, index) => {
+        console.log('image inside image map: ', image)
         return (
           <div key={index}>
-            <Card imgSrc={image}></Card>
+            <Card imgSrc={image.default}></Card>
           </div>
         )
       })}
