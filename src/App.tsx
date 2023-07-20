@@ -11,9 +11,17 @@ interface User {
   age: string
 }
 
-interface imageComponent {
+interface ImageComponent {
   default: string
 }
+
+interface CardSet {
+  name: string
+  cards: Array<string>
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface CardSets extends Array<CardSet>{}
 
 
 async function getUsersAsync(): Promise<User[]> {
@@ -22,9 +30,17 @@ async function getUsersAsync(): Promise<User[]> {
   return apiData.users
 }
 
+async function getCardDataAsync(): Promise<CardSet[]> {
+  const response = await fetch('https://dominion-sim-api.onrender.com/cards')
+  const dominionApiData = (await response.json()) as unknown as CardSets
+  console.log(dominionApiData)
+  return dominionApiData
+}
+
 function App() {
   const [list, setList] = useState<string[] | undefined>();
-  const [images, setImages] = useState<imageComponent[] | undefined>()
+  const [cardList, setCardList] = useState<string[] | undefined>();
+  const [images, setImages] = useState<ImageComponent[] | undefined>()
 
   useEffect(() => {
     async function importImages() {
@@ -42,6 +58,11 @@ function App() {
       .then(users => {
         const names = users.map(u => u.name);
         setList(names);
+      })
+      .catch(err => console.log(err));
+      getCardDataAsync()
+      .then(set => {
+        console.log('set: ', set)
       })
       .catch(err => console.log(err));
   }, []);
@@ -64,7 +85,6 @@ function App() {
       }
       {images && 
       images.map((image, index) => {
-        console.log('image inside image map: ', image)
         return (
           <div key={index}>
             <Card imgSrc={image.default}></Card>
