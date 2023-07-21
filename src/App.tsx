@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import Card from './components/Card';
-//import *  as Images from './public/index'
+import { Card } from './components/Card';
 
 interface ApiData {
   users: User[];
@@ -11,17 +10,10 @@ interface User {
   age: string
 }
 
-interface ImageComponent {
-  default: string
-}
-
 interface CardSet {
   name: string
   cards: Array<string>
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface CardSets extends Array<CardSet>{}
 
 
 async function getUsersAsync(): Promise<User[]> {
@@ -30,39 +22,28 @@ async function getUsersAsync(): Promise<User[]> {
   return apiData.users
 }
 
-async function getCardDataAsync(): Promise<CardSet[]> {
+async function getCardDataAsync(): Promise<string[]> {
   const response = await fetch('https://dominion-sim-api.onrender.com/cards')
-  const dominionApiData = (await response.json()) as unknown as CardSets
+  const dominionApiData = (await response.json()) as unknown as CardSet[]
+  const allCards = dominionApiData.map(cs => cs.cards).flat();
   console.log(dominionApiData)
-  return dominionApiData
+  return allCards
 }
 
-function App() {
+export function DeckApp() {
   const [list, setList] = useState<string[] | undefined>();
   const [cardList, setCardList] = useState<string[] | undefined>();
-  const [images, setImages] = useState<ImageComponent[] | undefined>()
 
   useEffect(() => {
-    async function importImages() {
-      const imagePaths = ['./public/artisan.jpg', './public/bandit.jpg', './public/bureaucrat.jpg', './public/cellar.jpg'];
-
-      const importPromises = imagePaths.map((path) => import(path));
-      const importedImages = await Promise.all(importPromises);
-
-      setImages(importedImages);
-    }
-
-    void importImages();
-    
     getUsersAsync()
       .then(users => {
         const names = users.map(u => u.name);
         setList(names);
       })
       .catch(err => console.log(err));
-      getCardDataAsync()
-      .then(set => {
-        console.log('set: ', set)
+    getCardDataAsync()
+      .then(cards => { 
+        setCardList(cards)
       })
       .catch(err => console.log(err));
   }, []);
@@ -76,24 +57,47 @@ function App() {
     <>
       {list.map((name, index) => {
         return (
-          <div key={index}>
+          <div key={`list-${index}`}>
             <h2>{name}</h2>
           </div>
         );
       })
       
       }
-      {images && 
-      images.map((image, index) => {
+      {cardList && cardList.map((card, index) => {
         return (
-          <div key={index}>
-            <Card imgSrc={image.default}></Card>
+          <div key={`card-${index}`}>
+            <Card name={card}></Card>
           </div>
         )
       })}
-      
     </>
   )
 }
 
-export default App
+
+// const obj: any = {
+//   "paul": {
+//     "strategies": [{
+//       "label": 'bigmoney',
+//       "shoppingList": [
+//         { card: 'Province', quantity: 12, },
+//         { card: 'Gold', quantity: 10, },
+//         { card: 'Silver', quantity: 10, },
+//       ],
+//     }, {
+//       "label": 'chapel shit',
+//       "shoppingList": [
+//         { card: 'Chapel', quantity: 1, },
+//         { card: 'Province', quantity: 12, },
+//         { card: 'Gold', quantity: 10, },
+//         { card: 'Silver', quantity: 10, },],
+//     }],
+//   },
+//   "nathan": {
+//     "strategies": [{
+//       "label": 'gold',
+//       "shoppingList": [],
+//     }],
+//   },
+// }

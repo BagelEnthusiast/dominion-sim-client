@@ -1,15 +1,12 @@
-import React from 'react'
-
-interface cardInfo {
-  imgSrc: string
+interface CardInfo {
+  name: string
 }
 
-const Card = (props: cardInfo) => {
+export const Card = (props: CardInfo) => {
+  const srcUrl = `cards/${props.name}.jpg`;
   return (
     <div>
-      <img src={props.imgSrc}></img>
+      <img src={srcUrl}/>
     </div>
   )
 }
-
-export default Card
