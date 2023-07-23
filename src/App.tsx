@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card } from './components/Card';
 
-interface User {
-  name: string
-  age: string
-}
-
 interface CardSet {
   name: string
   cards: Array<string>
