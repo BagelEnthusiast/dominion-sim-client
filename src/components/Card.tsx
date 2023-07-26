@@ -5,8 +5,8 @@ interface Props {
 export const Card = (props: Props) => {
   const srcUrl = `cards/${props.name}.jpg`;
   return (
-    <div>
-      <img src={srcUrl}/>
-    </div>
+    <img src={srcUrl} style={{
+      height: '200px',
+    }}/>
   )
 }

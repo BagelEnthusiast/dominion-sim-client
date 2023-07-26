@@ -38,9 +38,9 @@ export function DeckApp() {
       {//removed conditional render... do we need it?
       cardList.map((card, index) => {
         return (
-          <div key={`card-${index}`}>
+          <span key={`card-${index}`}>
             <Card name={card}></Card>
-          </div>
+          </span>
         )
       })
       }
