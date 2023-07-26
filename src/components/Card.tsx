@@ -1,5 +1,3 @@
-import { CardInfo } from "../interfaces";
-
 interface Props {
   name: string
 }

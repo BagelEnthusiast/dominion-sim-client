@@ -48,7 +48,7 @@ export function DeckApp() {
         strategies?.map((strat, index) => {
           return (
             <div key={`strat-${index}`}>
-              <StrategyDisplay strategy={strat}/>
+              <StrategyDisplay initialStrategy={strat}/>
             </div>
           )
         })
