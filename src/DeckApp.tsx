@@ -3,6 +3,7 @@ import { Card } from './components/Card';
 import { Strategy } from './interfaces';
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
+import { Chart } from './components/Chart';
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
@@ -35,6 +36,9 @@ export function DeckApp() {
   
   return (
     <>
+      {
+        strategies && <Chart strategies={strategies} /> 
+      }
       {//removed conditional render... do we need it?
       cardList.map((card, index) => {
         return (
