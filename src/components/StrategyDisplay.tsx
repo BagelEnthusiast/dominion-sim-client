@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { updateStrategy } from "../apiCalls"
 import { Strategy } from "../interfaces"
 import { Card } from "./Card"
@@ -23,10 +23,10 @@ export const StrategyDisplay = (props: Props) => {
       .catch(console.log);
   }, [strategy]);
 
-  const updateCard = (arrIndex: number, delta: number) => {
+  const updateCard = useCallback((arrIndex: number, delta: number) => {
     strategy.shoppingList[arrIndex].quantity += delta;
     setStrategy({ ...strategy });
-  }
+  }, [strategy]);
 
   return (
     <div>
