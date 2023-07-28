@@ -1,0 +1,9 @@
+#strategies-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#strategy-container {
+  display: flex;
+  flex-direction: row;
+}

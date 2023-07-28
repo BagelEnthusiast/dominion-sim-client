@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { updateStrategy } from "../apiCalls"
 import { Strategy } from "../interfaces"
 import { Card } from "./Card"
+import '../DeckApp.css'
 
 interface Props {
   initialStrategy: Strategy
@@ -15,13 +16,14 @@ export const StrategyDisplay = (props: Props) => {
       .catch(console.log);
   }, [strategy]);
 
+  //creates stable function reference
   const updateCard = useCallback((arrIndex: number, delta: number) => {
     strategy.shoppingList[arrIndex].quantity += delta;
     setStrategy({ ...strategy });
   }, [strategy]);
 
   return (
-    <span>
+    <div id='strategy-container'>
       <h1>{strategy.label}</h1>
       {strategy.shoppingList.map((shoppingItem, index) => {
         return(
@@ -33,7 +35,7 @@ export const StrategyDisplay = (props: Props) => {
         </div>
         )
       })}
-    </span>
+    </div>
   )
 }
 

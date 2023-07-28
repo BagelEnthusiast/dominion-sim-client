@@ -4,6 +4,7 @@ import { Strategy } from './interfaces';
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
+import './Deckapp.css'
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
@@ -35,7 +36,7 @@ export function DeckApp() {
   }
   
   return (
-    <>
+    <div>
       {strategies && <Chart strategies={strategies} />}
       {
       cardList.map((card, index) => {
@@ -46,6 +47,7 @@ export function DeckApp() {
         )
       })
       }
+      <div id="strategies-container">
       {
         strategies?.map((strat, index) => {
           return (
@@ -55,7 +57,8 @@ export function DeckApp() {
           )
         })
       }
-    </>
+      </div>
+    </div>
   )
 }
 
