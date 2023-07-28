@@ -7,14 +7,6 @@ interface Props {
   initialStrategy: Strategy
 }
 
-// useEffect(() => {
-//   updateShoppingListItem()
-//   .then(cards => { 
-//     setCardList(cards)
-//   })
-//   .catch(err => console.log(err))
-// }, []);
-
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
 
@@ -29,7 +21,7 @@ export const StrategyDisplay = (props: Props) => {
   }, [strategy]);
 
   return (
-    <div>
+    <span>
       <h1>{strategy.label}</h1>
       {strategy.shoppingList.map((shoppingItem, index) => {
         return(
@@ -41,7 +33,7 @@ export const StrategyDisplay = (props: Props) => {
         </div>
         )
       })}
-    </div>
+    </span>
   )
 }
 

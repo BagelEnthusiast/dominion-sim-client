@@ -36,10 +36,8 @@ export function DeckApp() {
   
   return (
     <>
+      {strategies && <Chart strategies={strategies} />}
       {
-        strategies && <Chart strategies={strategies} /> 
-      }
-      {//removed conditional render... do we need it?
       cardList.map((card, index) => {
         return (
           <span key={`card-${index}`}>
