@@ -4,6 +4,7 @@ import { Strategy } from './interfaces';
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
+import { LoginButton } from './components/LoginButton';
 import './Deckapp.css'
 
 export function DeckApp() {
@@ -37,6 +38,7 @@ export function DeckApp() {
   
   return (
     <div>
+      <LoginButton/>
       {strategies && <Chart strategies={strategies} />}
       {
       cardList.map((card, index) => {
