@@ -36,3 +36,24 @@ export async function updateStrategy(strat: Strategy): Promise<void> {
   //   throw error;
   // }
 }
+
+export async function updateUser(username: string, password: string): Promise<Response> {
+  try {
+    const response: Response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Login response error');
+    }
+    return response;
+  }
+  catch (error) {
+    console.error('Error logging in', error);
+    throw error;
+  }
+}
