@@ -4,9 +4,8 @@ import { Strategy } from './interfaces';
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
-import { SigninButton } from './components/SigninButton';
 import './Deckapp.css'
-import { Link, Route, Router } from 'react-router-dom';
+import { SigninButton } from './components/SigninButton';
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
@@ -38,9 +37,8 @@ export function DeckApp() {
   }
   
   return (
-    // <Router>
     <div>
-      {/* <Link to="/login">Sign In</Link> */}
+      {<SigninButton/>}
       {strategies && <Chart strategies={strategies} />}
       {
       cardList.map((card, index) => {
@@ -62,12 +60,7 @@ export function DeckApp() {
         })
       }
       </div>
-        {/* <Switch>
-          <Route path="/login" component={LoginForm} />
-          {/* Add more routes for other components if needed */}
-        {/* </Switch> */} 
     </div>
-    // </Router>
   )
 }
 
