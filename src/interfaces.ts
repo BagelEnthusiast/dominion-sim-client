@@ -13,12 +13,18 @@ export interface Strategy {
   shoppingList: ShoppingListItem[]
 }
 
+export interface UserData {
+  strategies: Strategy[]
+}
+
 export interface ApiData {
-  [user: string]: {
-    strategies: Strategy[]
-  }
+  [user: string]: UserData
 }
 
 export interface CardInfo {
   name: string
+}
+
+export enum StorageKey {
+  Username = 'username',
 }

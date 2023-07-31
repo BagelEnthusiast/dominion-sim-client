@@ -10,6 +10,9 @@ async function getSimData(strategies: Strategy[]): Promise<Simulation> {
     ],
     body: JSON.stringify(strategies),
   });
+  if (!resp.ok) {
+    throw new Error('sim failed');
+  }
   return resp.json() as unknown as Simulation;
 }
 

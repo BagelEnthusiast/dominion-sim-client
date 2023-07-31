@@ -6,12 +6,11 @@ import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
 import './Deckapp.css'
 import { SigninButton } from './components/SigninButton';
+import { useAccount } from './hooks/useAccount';
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
-
-  //hard coding default user until login is setup
-  const [username, setUsername] = useState('paul')
+  const { username } = useAccount()
   const [strategies, setStrategies] = useState <Strategy[] | undefined>()
 
   useEffect(() => {
@@ -23,6 +22,7 @@ export function DeckApp() {
   }, []);
 
   useEffect(() => {
+    if (username === null) return 
     getUserStrategiesAsync(username)
       .then(strats => {
         setStrategies(strats)
@@ -30,18 +30,13 @@ export function DeckApp() {
       .catch(err => console.log(err));
 
   }, [username]);
-
- 
-  if (!cardList) {
-    return <h1>loading</h1>
-  }
   
   return (
     <div>
       {<SigninButton/>}
       {strategies && <Chart strategies={strategies} />}
       {
-      cardList.map((card, index) => {
+      cardList?.map((card, index) => {
         return (
           <span key={`card-${index}`}>
             <Card name={card}></Card>
@@ -63,9 +58,3 @@ export function DeckApp() {
     </div>
   )
 }
-
-/*
-todo
-make strategy component
-add strategy functionality
-*/

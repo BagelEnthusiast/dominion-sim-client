@@ -1,9 +1,9 @@
-import { Strategy, CardSet, ApiData } from "./interfaces"
+import { Strategy, CardSet, UserData, StorageKey } from "./interfaces"
 
 export async function getUserStrategiesAsync(username: string): Promise<Strategy[]> {
-  const response = await fetch('http://localhost:3000/api')
-  const apiData = (await response.json()) as unknown as ApiData
-  return apiData[username].strategies
+  const response = await fetch(`http://localhost:3000/api/user/${username}`)
+  const userData = (await response.json()) as unknown as UserData
+  return userData.strategies
 }
 
 export async function getCardDataAsync(): Promise<string[]> {
@@ -37,7 +37,8 @@ export async function updateStrategy(strat: Strategy): Promise<void> {
   // }
 }
 
-export async function updateUser(username: string, password: string): Promise<Response> {
+export async function login(username: string, password: string): Promise<void> {
+  console.log('username and password', username, password)
   try {
     const response: Response = await fetch('http://localhost:3000/api/login', {
       method: 'POST',
@@ -50,9 +51,10 @@ export async function updateUser(username: string, password: string): Promise<Re
     if (!response.ok) {
       throw new Error('Login response error');
     }
-    return response;
+    localStorage.setItem(StorageKey.Username, username)
   }
   catch (error) {
+    localStorage.removeItem(StorageKey.Username)
     console.error('Error logging in', error);
     throw error;
   }

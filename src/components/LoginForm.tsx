@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { updateUser } from "../apiCalls";
+import { login } from "../apiCalls";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
   const handleLogin = (username: string, password: string) => {
-    updateUser(username, password)
-      .then(response => {
-        if (response.ok) {
-          console.log('login successful');
-        } else {
-          console.log('login failed');
-        }
+    login(username, password)
+      .then(() => {
+        console.log('login successful');
+        navigate('/')
       })
       .catch(console.log);
   }
