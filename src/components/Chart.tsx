@@ -19,17 +19,16 @@ async function getSimData(strategies: Strategy[]): Promise<Simulation> {
 export function Chart(props: {
   strategies: Strategy[];
 }) {
-  // const rendered = useRef(false);
+  const rendered = useRef(false);
   const [data, setData] = useState<Simulation | undefined>();
 
   useEffect(() => {
-    // if (rendered.current) { return; }
-    // rendered.current = true;
+    if (rendered.current) { return; }
+    rendered.current = true;
     getSimData(props.strategies)
       .then(data => setData(data))
       .catch(console.log);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.strategies]);
 
   if (!data) {
     return 'loading';

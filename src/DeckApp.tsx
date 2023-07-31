@@ -34,26 +34,29 @@ export function DeckApp() {
   return (
     <div>
       {<SigninButton/>}
-      {strategies && <Chart strategies={strategies} />}
-      {
-      cardList?.map((card, index) => {
+      {strategies && (
+        <>
+          <Chart strategies={strategies} /> 
+          {strategies.map((strat, index) => { 
+            return (
+              <div key={`strat-${index}`}>
+                <StrategyDisplay initialStrategy={strat}/>
+              </div>
+            )
+          })}
+        </>
+      )}
+      {cardList?.map((card, index) => {
         return (
           <span key={`card-${index}`}>
             <Card name={card}></Card>
           </span>
         )
-      })
-      }
+      })}
       <div id="strategies-container">
-      {
-        strategies?.map((strat, index) => {
-          return (
-            <div key={`strat-${index}`}>
-              <StrategyDisplay initialStrategy={strat}/>
-            </div>
-          )
-        })
-      }
+      
+        
+      
       </div>
     </div>
   )
