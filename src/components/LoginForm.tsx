@@ -20,7 +20,7 @@ export const LoginForm = () => {
       })
       .catch(console.log);
   }
-
+  
   // const handleOathLogin = () => {
   //   navigate(getGoogleUrl('http://localhost:5173/login'))
   // }
@@ -40,6 +40,7 @@ export const LoginForm = () => {
         placeholder="Password"
       />
       <button onClick={() => handleLogin(username, password)}>Sign in</button>
+      {/*TODO: make this work from all pages */}
       <a href={getGoogleUrl('http://localhost:5173/login')}>Sign in with Google</a>
       {/* <button onClick={() => handleOathLogin()}>Sign in with Google</button> */}
     </div>
