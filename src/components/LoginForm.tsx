@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { login } from "../apiCalls";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getGoogleUrl } from "../getGoogleUrl";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
+
+  //see if this works for now, but we should probably use a different method
+  // const location = useLocation();
+  //let from = ((location.state as any)?.from?.pathname as string) || '/';
 
   const handleLogin = (username: string, password: string) => {
     login(username, password)
@@ -15,6 +20,10 @@ export const LoginForm = () => {
       })
       .catch(console.log);
   }
+
+  // const handleOathLogin = () => {
+  //   navigate(getGoogleUrl('http://localhost:5173/login'))
+  // }
 
   return (
     <div>
@@ -31,6 +40,8 @@ export const LoginForm = () => {
         placeholder="Password"
       />
       <button onClick={() => handleLogin(username, password)}>Sign in</button>
+      <a href={getGoogleUrl('http://localhost:5173/login')}>Sign in with Google</a>
+      {/* <button onClick={() => handleOathLogin()}>Sign in with Google</button> */}
     </div>
   )
 }
