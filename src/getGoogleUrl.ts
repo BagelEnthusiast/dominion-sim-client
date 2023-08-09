@@ -14,6 +14,7 @@ export const getGoogleUrl = (from: string) => {
     state: from,
   };
   console.log('options: ', options)
+  // built in javascript function to convert an object to a query string
   const qs = new URLSearchParams(options);
 
   return `${rootUrl}?${qs.toString()}`;
