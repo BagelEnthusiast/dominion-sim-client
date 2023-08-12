@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { login } from "../apiCalls";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getGoogleUrl } from "../getGoogleUrl";
 
 export const LoginForm = () => {

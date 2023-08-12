@@ -30,5 +30,7 @@ export enum StorageKey {
 }
 
 export interface JwtPayload {
-  email: string
+  email: string,
+  exp: number,
+  iat: number
 }
