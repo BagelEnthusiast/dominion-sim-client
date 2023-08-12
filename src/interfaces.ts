@@ -28,3 +28,7 @@ export interface CardInfo {
 export enum StorageKey {
   Username = 'username',
 }
+
+export interface JwtPayload {
+  email: string
+}

@@ -10,7 +10,7 @@ import { useAccount } from './hooks/useAccount';
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
-  const { username } = useAccount()
+  const username = useAccount()
   const [strategies, setStrategies] = useState <Strategy[] | undefined>()
 
   useEffect(() => {

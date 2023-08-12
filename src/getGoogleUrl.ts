@@ -1,3 +1,5 @@
+// used https://codevoweb.com/google-oauth-authentication-react-and-node/ tutorial
+
 export const getGoogleUrl = (from: string) => {
   const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
 
