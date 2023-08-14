@@ -4,7 +4,7 @@ import { Strategy } from './interfaces';
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
-import './Deckapp.css'
+import './DeckApp.css'
 import { SigninButton } from './components/SigninButton';
 import { useAccount } from './hooks/useAccount';
 

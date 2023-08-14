@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Strategy } from '../interfaces';
 
 async function getSimData(strategies: Strategy[]): Promise<Simulation> {
-  const resp = await fetch('https://dominion-sim-api.onrender.com/sim', {
+  const resp = await fetch('https://dominion-sim-api.mpaulweeks.com/sim', {
     method: 'post',
     headers: [
       ['Content-Type', 'application/json']
