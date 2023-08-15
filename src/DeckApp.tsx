@@ -5,8 +5,8 @@ import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls';
 import { StrategyDisplay } from './components/StrategyDisplay';
 import { Chart } from './components/Chart';
 import './DeckApp.css'
-import { SigninButton } from './components/SigninButton';
 import { useAccount } from './hooks/useAccount';
+import { getGoogleUrl } from './getGoogleUrl';
 
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
@@ -30,10 +30,13 @@ export function DeckApp() {
       .catch(err => console.log(err));
 
   }, [username]);
+
+  // const location = useLocation();
+  //let from = ((location.state as any)?.from?.pathname as string) || '/';
   
   return (
     <div>
-      {<SigninButton/>}
+      <a href={getGoogleUrl('http://localhost:5173')}>Sign in with Google</a>
       {strategies && (
         <>
           <Chart strategies={strategies} /> 

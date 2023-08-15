@@ -6,7 +6,6 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { LoginForm } from './components/LoginForm.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -14,7 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Router>
       <Routes>
         <Route path="/" element={<DeckApp />} />
-        <Route path="/login" element={<LoginForm />} />
       </Routes>
     </Router>
   </React.StrictMode>,
