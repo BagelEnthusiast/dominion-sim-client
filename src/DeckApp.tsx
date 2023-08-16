@@ -37,13 +37,13 @@ export function DeckApp() {
   return (
     <div>
       <a href={getGoogleUrl('http://localhost:5173')}>Sign in with Google</a>
-      {strategies && (
+      {(strategies && username) && (
         <>
-          <Chart strategies={strategies} /> 
+          <Chart strategies={strategies}/> 
           {strategies.map((strat, index) => { 
             return (
               <div key={`strat-${index}`}>
-                <StrategyDisplay initialStrategy={strat}/>
+                <StrategyDisplay initialStrategy={strat} username={username}/>
               </div>
             )
           })}

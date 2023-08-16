@@ -5,14 +5,15 @@ import { Card } from "./Card"
 import '../DeckApp.css'
 
 interface Props {
-  initialStrategy: Strategy
+  initialStrategy: Strategy,
+  username: string
 }
 
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
 
   useEffect(() => {
-    updateStrategy(strategy)
+    updateStrategy(strategy, props.username)
       .catch(console.log);
   }, [strategy]);
 

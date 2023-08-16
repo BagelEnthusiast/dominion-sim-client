@@ -17,26 +17,29 @@ export async function getCardDataAsync(): Promise<string[]> {
 }
 
 //update later to pass in a user argument
-export async function updateStrategy(strat: Strategy): Promise<void> {
+export async function updateStrategy(strat: Strategy, username: string): Promise<Response> {
   await Promise.resolve();
   console.log(strat);
-  // try {
-  //   const response: Response = await fetch('http://localhost:3000/api', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(strat),
-  //   });
+  try {
+    const response: Response = await fetch('http://localhost:3000/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        strat,
+        username
+      }),
+    });
 
-  //   if (!response.ok) {
-  //     throw new Error('Strategy update response error');
-  //   }
-  //   return response;
-  // } catch (error) {
-  //   console.error('Error updating strategy', error);
-  //   throw error;
-  // }
+    if (!response.ok) {
+      throw new Error('Strategy update response error');
+    }
+    return response;
+  } catch (error) {
+    console.error('Error updating strategy', error);
+    throw error;
+  }
 }
 
 export async function login(username: string, password: string): Promise<void> {

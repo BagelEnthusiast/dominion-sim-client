@@ -1,7 +1,9 @@
-## Oath
-* Get rid of seperate login page
+## Client
+* Finish fetch strategies
+* function for create new strategy
 
 ## Database
+* route to update strategies
 * Make sure no username duplicates
 
 # Stretch Goals
