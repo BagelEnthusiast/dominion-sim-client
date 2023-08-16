@@ -1,9 +1,9 @@
 ## Client
-* Finish fetch strategies
 * function for create new strategy
 
-## Database
-* route to update strategies
+## Backend
+* Cleanup interfaces in server file
+* route for creating new strategy
 * Make sure no username duplicates
 
 # Stretch Goals
