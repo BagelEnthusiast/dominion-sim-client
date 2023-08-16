@@ -8,6 +8,9 @@ import './DeckApp.css'
 import { useAccount } from './hooks/useAccount';
 import { getGoogleUrl } from './getGoogleUrl';
 
+const isDev = import.meta.env.DEV
+const apiUrl = isDev ? 'http://localhost:5173' : 'https://dominion-sim-client.vercel.app/'
+
 export function DeckApp() {
   const [cardList, setCardList] = useState<string[] | undefined>()
   const username = useAccount()
@@ -36,7 +39,7 @@ export function DeckApp() {
   
   return (
     <div>
-      <a href={getGoogleUrl('http://localhost:5173')}>Sign in with Google</a>
+      <a href={getGoogleUrl(`${apiUrl}`)}>Sign in with Google</a>
       {(strategies && username) && (
         <>
           <Chart strategies={strategies}/> 

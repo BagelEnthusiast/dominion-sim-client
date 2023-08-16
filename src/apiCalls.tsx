@@ -1,6 +1,6 @@
-import { Strategy, CardSet, UserData, StorageKey } from "./interfaces"
+import { Strategy, CardSet, UserData } from "./interfaces"
 const isDev = import.meta.env.DEV
-const apiUrl = isDev ? 'http://localhost:3000' : 'todo'
+const apiUrl = isDev ? 'http://localhost:3000' : 'https://domserver.mrluckywaffles.com/'
 
 export async function getUserStrategiesAsync(username: string): Promise<Strategy[]> {
   const response = await fetch(`${apiUrl}/api/user/${username}`)
@@ -16,12 +16,10 @@ export async function getCardDataAsync(): Promise<string[]> {
   return allCards
 }
 
-//update later to pass in a user argument
 export async function updateStrategy(strat: Strategy, username: string): Promise<Response> {
-  await Promise.resolve();
   console.log(strat);
   try {
-    const response: Response = await fetch('http://localhost:3000/user/strategy', {
+    const response: Response = await fetch(`${apiUrl}/user/strategy`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,29 +36,6 @@ export async function updateStrategy(strat: Strategy, username: string): Promise
     return response;
   } catch (error) {
     console.error('Error updating strategy', error);
-    throw error;
-  }
-}
-
-export async function login(username: string, password: string): Promise<void> {
-  console.log('username and password', username, password)
-  try {
-    const response: Response = await fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Login response error');
-    }
-    localStorage.setItem(StorageKey.Username, username)
-  }
-  catch (error) {
-    localStorage.removeItem(StorageKey.Username)
-    console.error('Error logging in', error);
     throw error;
   }
 }
