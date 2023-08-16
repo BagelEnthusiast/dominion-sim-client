@@ -21,7 +21,7 @@ export async function updateStrategy(strat: Strategy, username: string): Promise
   await Promise.resolve();
   console.log(strat);
   try {
-    const response: Response = await fetch('http://localhost:3000/api', {
+    const response: Response = await fetch('http://localhost:3000/user/strategy', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
