@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<DeckApp />} />
+        <Route path="/*" element={<DeckApp />} />
       </Routes>
     </Router>
   </React.StrictMode>,
