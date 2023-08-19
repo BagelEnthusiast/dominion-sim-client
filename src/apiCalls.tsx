@@ -1,6 +1,6 @@
 import { Strategy, CardSet, UserData } from "./interfaces"
 const isDev = import.meta.env.DEV
-const apiUrl = isDev ? 'http://localhost:3000' : 'https://domserver.mrluckywaffles.com/'
+const apiUrl = isDev ? 'http://localhost:3000' : 'https://domserver.mrluckywaffles.com'
 
 export async function getUserStrategiesAsync(username: string): Promise<Strategy[]> {
   const response = await fetch(`${apiUrl}/api/user/${username}`)
