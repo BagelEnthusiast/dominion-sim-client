@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Card } from './components/Card'
-import { ShoppingListItem, Strategy } from './interfaces'
+import { Strategy } from './interfaces'
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
 import { StrategyDisplay } from './components/StrategyDisplay'
 import { Chart } from './components/Chart'
