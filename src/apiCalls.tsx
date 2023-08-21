@@ -16,6 +16,30 @@ export async function getCardDataAsync(): Promise<string[]> {
   return allCards
 }
 
+export async function createStrategy(strat: Strategy, username: string): Promise<Response> {
+  console.log(strat);
+  try {
+    const response: Response = await fetch(`${apiUrl}/user/strategy`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        strat,
+        username
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Create strategy response error');
+    }
+    return response;
+  } catch (error) {
+    console.error('Error creating strategy', error);
+    throw error;
+  }
+}
+
 export async function updateStrategy(strat: Strategy, username: string): Promise<Response> {
   console.log(strat);
   try {
