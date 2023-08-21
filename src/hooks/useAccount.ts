@@ -1,12 +1,8 @@
 import * as jose from 'jose'
 import { JwtPayload } from "../interfaces"
-import { useSearchParams } from 'react-router-dom'
 
 export function useAccount() {
-
-  const [searchParams] = useSearchParams()
-
-  const token = searchParams.get('t')
+  const token = localStorage.getItem('token');
 
   //const token = useLocation().search
   console.log('token: ', token)
