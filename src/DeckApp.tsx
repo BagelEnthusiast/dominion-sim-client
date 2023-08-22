@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, FormEvent } from 'react'
 import { Card } from './components/Card'
 import { Strategy } from './interfaces'
 import { getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
@@ -12,24 +12,29 @@ import { MyModal } from './components/MyModel'
 const isDev = import.meta.env.DEV
 const apiUrl = isDev ? 'http://localhost:5173' : 'https://dominion-sim-client.vercel.app/'
 
+interface eventTarget {
+  name: {value: string}
+}
+
 export function DeckApp() {
+  console.log('deckApp mounted')
   const [cardList, setCardList] = useState<string[] | undefined>()
   const username = useAccount()
   const [strategies, setStrategies] = useState <Strategy[] | undefined>()
   const [modalOpen, setModalOpen] = useState(false)
 
-  const handleNewStrategy = useCallback((l: string) => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    console.log('event:', event)
+    event.preventDefault();
+    //const target: eventTarget = event.target
     if (!strategies) {
       throw new Error('This code should not be accessible')
     }
-    
-    const newStrategy: Strategy = { 'label': l, 'shoppingList': []}
-
-    //why can't I use the spread stynax here?
+    const newStrategy: Strategy = { 'label': 'test', 'shoppingList': []}
     const newStrategies: Strategy[] = [newStrategy, ...strategies]
-
     setStrategies(newStrategies)
-  }, [strategies])
+    console.log('all strategies: ', strategies)
+  }
 
   useEffect(() => {
     getCardDataAsync()
@@ -59,6 +64,7 @@ export function DeckApp() {
         <>
           <Chart strategies={strategies}/> 
           {strategies.map((strat, index) => { 
+            console.log('strategy in map from deckapp:', strat)
             return (
               <div key={`strat-${index}`}>
                 <StrategyDisplay initialStrategy={strat} username={username}/>
@@ -72,13 +78,18 @@ export function DeckApp() {
       {modalOpen && <MyModal
         onExit={() => setModalOpen(false)}
         >
-          <form onSubmit={() => handleNewStrategy('input')}>
+          <div className='wrapper'>
+            <h1>Add Strategy</h1>
+          <form onSubmit={handleSubmit}>
+            <fieldset>
             <label>
               Strategy Name:
               <input type="text" name="name" defaultValue='New Strategy'/>
             </label>
-            <input type='submit' value='submit'/>
+            </fieldset>
+            <button type='submit'>Create</button>
           </form>
+          </div>
           <button onClick={() => setModalOpen(false)}> X </button>
         </MyModal>
       }
@@ -90,7 +101,6 @@ export function DeckApp() {
         )
       })}
       <div id="strategies-container">
-      
         
       
       </div>

@@ -12,12 +12,11 @@ export async function getCardDataAsync(): Promise<string[]> {
   const response = await fetch('https://dominion-sim-api.mpaulweeks.com/cards')
   const dominionApiData = (await response.json()) as unknown as CardSet[]
   const allCards = dominionApiData.map(cs => cs.cards).flat()
-  console.log(allCards)
   return allCards
 }
 
 export async function createStrategy(strat: Strategy, username: string): Promise<Response> {
-  console.log(strat);
+  
   try {
     const response: Response = await fetch(`${apiUrl}/user/strategy`, {
       method: 'POST',

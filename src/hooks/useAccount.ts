@@ -3,10 +3,6 @@ import { JwtPayload } from "../interfaces"
 
 export function useAccount() {
   const token = localStorage.getItem('token');
-
-  //const token = useLocation().search
-  console.log('token: ', token)
-
   if (!token) return null
   
   //const token: string = Cookies.get('access-token') as string
