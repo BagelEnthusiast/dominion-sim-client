@@ -8,6 +8,7 @@ import './DeckApp.css'
 import { useAccount } from './hooks/useAccount'
 import { getGoogleUrl } from './getGoogleUrl'
 import { MyModal } from './components/MyModel'
+import { v4 as uuidv4 } from 'uuid'
 
 const isDev = import.meta.env.DEV
 const apiUrl = isDev ? 'http://localhost:5173' : 'https://dominion-sim-client.vercel.app/'
@@ -26,14 +27,13 @@ export function DeckApp() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     console.log('event:', event)
     event.preventDefault();
-    //const target: eventTarget = event.target
+    const target = event.target as unknown as eventTarget
     if (!strategies) {
       throw new Error('This code should not be accessible')
     }
-    const newStrategy: Strategy = { 'label': 'test', 'shoppingList': []}
+    const newStrategy: Strategy = { 'id': uuidv4(), 'label': target.name.value, 'shoppingList': []}
     const newStrategies: Strategy[] = [newStrategy, ...strategies]
     setStrategies(newStrategies)
-    console.log('all strategies: ', strategies)
   }
 
   useEffect(() => {
@@ -63,10 +63,10 @@ export function DeckApp() {
       {(strategies && username) && (
         <>
           <Chart strategies={strategies}/> 
-          {strategies.map((strat, index) => { 
-            console.log('strategy in map from deckapp:', strat)
+          {strategies.map(strat => { 
+            console.log('making a strategy component')
             return (
-              <div key={`strat-${index}`}>
+              <div key={strat.id}>
                 <StrategyDisplay initialStrategy={strat} username={username}/>
               </div>
             )

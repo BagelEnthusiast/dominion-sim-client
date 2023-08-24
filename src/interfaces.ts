@@ -4,11 +4,13 @@ export interface CardSet {
 }
 
 export interface ShoppingListItem {
-  card: string,
+  id: string
+  card: string
   quantity: number
 }
 
 export interface Strategy {
+  id: string
   label: string
   shoppingList: ShoppingListItem[]
 }
@@ -26,11 +28,11 @@ export interface CardInfo {
 }
 
 export enum StorageKey {
-  Username = 'username',
+  Username = 'username'
 }
 
 export interface JwtPayload {
-  email: string,
-  exp: number,
+  email: string
+  exp: number
   iat: number
 }

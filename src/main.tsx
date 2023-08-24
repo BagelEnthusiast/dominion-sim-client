@@ -10,12 +10,12 @@ import { OauthApp } from './OauthApp.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  
     <Router>
       <Routes>
         <Route path="/" element={<DeckApp />} />
         <Route path="/oauth" element={<OauthApp />} />
       </Routes>
     </Router>
-  </React.StrictMode>,
+  ,
 )

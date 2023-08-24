@@ -10,14 +10,8 @@ interface Props {
 }
 
 export const StrategyDisplay = (props: Props) => {
-  console.log('strategy from props:', props.initialStrategy)
   const [strategy, setStrategy] = useState(props.initialStrategy);
-  console.log('strategy state: ', strategy)
-  // useEffect(() => {
-  //   updateStrategy(strategy, props.username)
-  //     .catch(console.log);
-  // }, [strategy]);
-
+  
   //creates stable function reference
   const updateCard = useCallback((arrIndex: number, delta: number) => {
     console.log('update strategy hit')
