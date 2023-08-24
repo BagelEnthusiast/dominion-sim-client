@@ -1,6 +1,6 @@
 ## Client
-* function for create new strategy
-* ability to add cards to new strategy by clicking on them
+* ability to add cards to new strategy
+* don't make chart api call if no strategies with cards
 
 ## Server
 * route for creating new strategy
@@ -8,3 +8,4 @@
 
 # Stretch Goals
 * GraphQL api - look into URQL and express graphql and https://the-guild.dev/graphql/codegen 
+* Required sign in functionality

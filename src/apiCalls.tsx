@@ -16,9 +16,8 @@ export async function getCardDataAsync(): Promise<string[]> {
 }
 
 export async function createStrategy(strat: Strategy, username: string): Promise<Response> {
-  
   try {
-    const response: Response = await fetch(`${apiUrl}/user/strategy`, {
+    const response: Response = await fetch(`${apiUrl}/user/strategy/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
