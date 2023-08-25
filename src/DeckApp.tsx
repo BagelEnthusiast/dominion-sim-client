@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, FormEvent } from 'react'
-import { Card } from './components/Card'
+import { CardShort } from './components/CardShort'
 import { Strategy } from './interfaces'
 import { createStrategy, getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
 import { StrategyDisplay } from './components/StrategyDisplay'
@@ -106,7 +106,7 @@ export function DeckApp() {
           {cardList?.map((card, index) => {
             return (
               <span key={`card-${index}`}>
-                <Card name={card}></Card>
+                <CardShort name={card}></CardShort>
               </span>
             )
           })}

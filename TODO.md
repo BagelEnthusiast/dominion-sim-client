@@ -1,6 +1,6 @@
 ## Client
 * ability to add cards to new strategy
-* don't make chart api call if no strategies with cards
+* don't make chart api call if no strategies with cards - use a filter?
 
 ## Server
 * route for creating new strategy

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { updateStrategy } from "../apiCalls"
 import { Strategy } from "../interfaces"
 import { Card } from "./Card"
@@ -11,7 +11,7 @@ interface Props {
 
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
-  
+  const [open, setOpen] = useState(false)
   //creates stable function reference
   const updateCard = useCallback((arrIndex: number, delta: number) => {
     console.log('update strategy hit')
@@ -22,17 +22,22 @@ export const StrategyDisplay = (props: Props) => {
 
   return (
     <div id='strategy-container'>
-      <h1>{strategy.label}</h1>
-      {strategy.shoppingList.map((shoppingItem, index) => {
-        return(
-        <div key={`shoppingItem-${index}`}>
-          <Card name={shoppingItem.card}></Card>
-          <h1>{shoppingItem.quantity}</h1>
-          <button onClick={() => updateCard(index, +1)}> + </button>
-          <button onClick={() => updateCard(index, -1)}> - </button>
+      <h1 onClick={() => setOpen(!open)}>{strategy.label}</h1>
+      {open &&
+        <div>
+          {strategy.shoppingList.map((shoppingItem, index) => {
+            console.log(shoppingItem)
+            return (
+              <div key={`item-${index}`}>
+                <Card name={shoppingItem.card} quantity={shoppingItem.quantity}></Card>
+                <button onClick={() => updateCard(index, +1)}> + </button>
+                <button onClick={() => updateCard(index, -1)}> - </button>
+              </div>
+            )
+          })}
         </div>
-        )
-      })}
+      }
+
     </div>
   )
 }
