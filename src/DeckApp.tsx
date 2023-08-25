@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, FormEvent } from 'react'
 import { CardShort } from './components/CardShort'
-import { Strategy } from './interfaces'
+import { Strategy, ShoppingListItem } from './interfaces'
 import { createStrategy, getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
 import { StrategyDisplay } from './components/StrategyDisplay'
 import { Chart } from './components/Chart'
@@ -14,8 +14,10 @@ const isDev = import.meta.env.DEV
 const apiUrl = isDev ? 'http://localhost:5173' : 'https://dominion-sim-client.vercel.app/'
 
 interface eventTarget {
-  name: { value: string }
+  name: { value: string },
+  cardList: {value: string}
 }
+
 
 export function DeckApp() {
   console.log('deckApp mounted')
@@ -23,14 +25,28 @@ export function DeckApp() {
   const username = useAccount()
   const [strategies, setStrategies] = useState<Strategy[] | undefined>()
   const [modalOpen, setModalOpen] = useState(false)
+  
+  // const handleCardClick = useCallback((card: string) => {
+  //   setStrategies()
+  // }, [])
 
-  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    //try to find alternative to casting here
     const target = event.target as unknown as eventTarget
     if (!strategies) {
       throw new Error('This code should not be accessible')
     }
-    const newStrategy = { 'id': uuidv4(), 'label': target.name.value, 'shoppingList': [] }
+    debugger
+    const cardStrings = target.cardList.value.split('\n')
+    const newShoppingList: ShoppingListItem[] = cardStrings.map(string => {
+      return {
+        id: uuidv4(),
+        card: string.toLowerCase(),
+        quantity: 1
+      }
+    })
+    const newStrategy = { 'id': uuidv4(), 'label': target.name.value, 'shoppingList': newShoppingList }
     const newStrategies = [...strategies, newStrategy]
     setStrategies(newStrategies)
     if (!username) {
@@ -42,6 +58,7 @@ export function DeckApp() {
   useEffect(() => {
     getCardDataAsync()
       .then(cards => {
+        console.log('card list: ', cards)
         setCardList(cards)
       })
       .catch(err => console.log(err))
@@ -74,11 +91,15 @@ export function DeckApp() {
       >
         <div className='wrapper'>
           <h1>Add Strategy</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFormSubmit}>
             <fieldset>
               <label>
                 Strategy Name:
                 <input type="text" name="name" defaultValue='New Strategy' />
+              </label>
+              <label>
+                Add Cards:
+                <textarea name="cardList"/>
               </label>
             </fieldset>
             <button type='submit'>Create</button>
