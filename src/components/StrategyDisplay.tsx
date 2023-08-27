@@ -22,19 +22,22 @@ export const StrategyDisplay = (props: Props) => {
 
   return (
     <div id='strategy-container'>
-      <h1 onClick={() => setOpen(!open)}>{strategy.label}</h1>
+      <h3 onClick={() => setOpen(!open)}>{strategy.label}</h3>
       {open &&
         <div>
-          {strategy.shoppingList.map((shoppingItem, index) => {
-            console.log(shoppingItem)
-            return (
-              <div key={`item-${index}`}>
-                <Card name={shoppingItem.card} quantity={shoppingItem.quantity}></Card>
-                <button onClick={() => updateCard(index, +1)}> + </button>
-                <button onClick={() => updateCard(index, -1)}> - </button>
-              </div>
-            )
-          })}
+          <div>
+            {strategy.shoppingList.map((shoppingItem, index) => {
+              console.log(shoppingItem)
+              return (
+                <div key={`item-${index}`}>
+                  <Card name={shoppingItem.card} quantity={shoppingItem.quantity}></Card>
+                  <button onClick={() => updateCard(index, +1)}> + </button>
+                  <button onClick={() => updateCard(index, -1)}> - </button>
+                </div>
+              )
+            })}
+          </div>
+          <input placeholder="Add Card..."/>
         </div>
       }
 

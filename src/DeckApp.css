@@ -1,11 +1,16 @@
 #strategies-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #strategy-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 1em;
+  background-color: white;
+  padding: 1em;
 }
 
 #new-strategy-button {
