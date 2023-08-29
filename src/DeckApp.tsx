@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, FormEvent } from 'react'
-import { CardShort } from './components/CardShort'
+import { LibraryCard } from './components/LibraryCard'
 import { Strategy, ShoppingListItem } from './interfaces'
 import { createStrategy, getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
 import { StrategyDisplay } from './components/StrategyDisplay'
@@ -9,13 +9,14 @@ import { useAccount } from './hooks/useAccount'
 import { getGoogleUrl } from './getGoogleUrl'
 import { MyModal } from './components/MyModel'
 import { v4 as uuidv4 } from 'uuid'
+import { CardPreview } from './components/CardPreview'
 
 const isDev = import.meta.env.DEV
 const apiUrl = isDev ? 'http://localhost:5173' : 'https://dominion-sim-client.vercel.app/'
 
 interface eventTarget {
   name: { value: string },
-  cardList: {value: string}
+  cardList: { value: string }
 }
 
 
@@ -25,7 +26,7 @@ export function DeckApp() {
   const username = useAccount()
   const [strategies, setStrategies] = useState<Strategy[] | undefined>()
   const [modalOpen, setModalOpen] = useState(false)
-  
+
   // const handleCardClick = useCallback((card: string) => {
   //   setStrategies()
   // }, [])
@@ -79,62 +80,80 @@ export function DeckApp() {
 
   return (
     <div>
-      {!username &&
-        <a href={getGoogleUrl(`${apiUrl}`)}>Sign in with Google</a>
-      }
+      {!username && (
+        <div className='logged-out-app-container'>
 
-      {username &&
-        <button id='new-strategy-button' onClick={() => setModalOpen(!modalOpen)}> Add Strategy </button>
-      }
-      {modalOpen && <MyModal
-        onExit={() => setModalOpen(false)}
-      >
-        <div className='wrapper'>
-          <h1>Add Strategy</h1>
-          <form onSubmit={handleFormSubmit}>
-            <fieldset>
-              <label>
-                Strategy Name:
-                <input type="text" name="name" defaultValue='New Strategy' />
-              </label>
-              <label>
-                Add Cards:
-                <textarea name="cardList"/>
-              </label>
-            </fieldset>
-            <button type='submit'>Create</button>
-          </form>
+          <a href={getGoogleUrl(`${apiUrl}`)}>Sign in with Google</a>
         </div>
-        <button onClick={() => setModalOpen(false)}> X </button>
-      </MyModal>
+      )
       }
-
-      <div id="strategies-container">
-        {(strategies && username) && (
-          <>
-            <Chart strategies={strategies} />
-            {strategies.map(strat => {
-              console.log('making a strategy component')
-              return (
-                <div key={strat.id}>
-                  <StrategyDisplay initialStrategy={strat} username={username} />
+      {username && (
+        <div className='logged-in-app-container'>
+          {modalOpen && <MyModal
+            onExit={() => setModalOpen(false)}
+          >
+            <div className='modal-form-wrapper'>
+              <h1>Add Strategy</h1>
+              <form onSubmit={handleFormSubmit}>
+                <fieldset>
+                  <label>
+                    Strategy Name:
+                    <input type="text" name="name" defaultValue='New Strategy' />
+                  </label>
+                  <label>
+                    Add Cards:
+                    <textarea name="cardList" />
+                  </label>
+                </fieldset>
+                <button type='submit'>Create</button>
+              </form>
+            </div>
+            <button onClick={() => setModalOpen(false)}> X </button>
+          </MyModal>
+          }
+          <div className='app-left-column'>
+            <div className='preview-container'>
+              {cardList &&
+                //placeholder - build card image preview component
+                <CardPreview name={cardList[0]}/>
+              }
+            </div>
+            <div className='library'>
+              {cardList?.map((card, index) => {
+                return (
+                  <span key={`card-${index}`}>
+                    <LibraryCard name={card}></LibraryCard>
+                  </span>
+                )
+              })}
+            </div>
+          </div>
+          <div className='chart-container'>
+            {strategies &&
+              <Chart strategies={strategies} />
+            }
+          </div>
+          <div className='app-right-column'>
+            <h1>Strategies</h1>
+            <button id='new-strategy-button' onClick={() => setModalOpen(!modalOpen)}> Add Strategy </button>
+            <div className="strategies-container">
+              {strategies && (
+                <div>
+                  {strategies.map(strat => {
+                    console.log('making a strategy component')
+                    return (
+                      <div key={strat.id}>
+                        <StrategyDisplay initialStrategy={strat} username={username} />
+                      </div>
+                    )
+                  })}
                 </div>
-              )
-            })}
-          </>
-        )}
-        <div id='card-list-container'>
-          {cardList?.map((card, index) => {
-            return (
-              <span key={`card-${index}`}>
-                <CardShort name={card}></CardShort>
-              </span>
-            )
-          })}
-
+              )}
+            </div>
+          </div>
         </div>
-
-      </div>
+      )
+      }
     </div>
   )
 }
