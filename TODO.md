@@ -2,6 +2,7 @@
 * Design basic css layout for all components
 * ability to add cards to new strategy
 * don't make chart api call if no strategies with cards - use a filter?
+* validate JWT
 
 ## Server
 * route for creating new strategy

@@ -1,7 +1,9 @@
+import { MouseEventHandler, ReactEventHandler } from 'react'
 import styles from './LibraryCard.module.css'
 
 interface Props {
     name: string,
+    onHover: MouseEventHandler<HTMLDivElement>
   }
   
   export const LibraryCard = (props: Props) => {
@@ -10,7 +12,7 @@ interface Props {
         // <img src={srcUrl} style={{
         //   height: '200px',
         // }}/>
-        <div className={styles.card}>
+        <div onMouseOver={props.onHover} className={styles.card}>
           {props.name}
         </div>
     )

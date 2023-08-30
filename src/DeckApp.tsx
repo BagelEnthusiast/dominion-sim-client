@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FormEvent } from 'react'
+import { useState, useEffect, useCallback, FormEvent, ReactEventHandler, MouseEventHandler } from 'react'
 import { LibraryCard } from './components/LibraryCard'
 import { Strategy, ShoppingListItem } from './interfaces'
 import { createStrategy, getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
@@ -26,10 +26,17 @@ export function DeckApp() {
   const username = useAccount()
   const [strategies, setStrategies] = useState<Strategy[] | undefined>()
   const [modalOpen, setModalOpen] = useState(false)
+  const [preview, setPreview] = useState('copper')
 
-  // const handleCardClick = useCallback((card: string) => {
-  //   setStrategies()
-  // }, [])
+
+  const handleCardHover = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    // is this better than the unkown casting in handleformsubmit?
+    const t = event.target as HTMLDivElement
+    if (t.textContent === null) {
+      throw new Error('This code should not be accessible')
+    }
+    setPreview(t.textContent)
+  }, [preview])
 
   const handleFormSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -38,7 +45,6 @@ export function DeckApp() {
     if (!strategies) {
       throw new Error('This code should not be accessible')
     }
-    debugger
     const cardStrings = target.cardList.value.split('\n')
     const newShoppingList: ShoppingListItem[] = cardStrings.map(string => {
       return {
@@ -115,14 +121,14 @@ export function DeckApp() {
             <div className='preview-container'>
               {cardList &&
                 //placeholder - build card image preview component
-                <CardPreview name={cardList[0]}/>
+                <CardPreview name={preview}/>
               }
             </div>
             <div className='library'>
               {cardList?.map((card, index) => {
                 return (
                   <span key={`card-${index}`}>
-                    <LibraryCard name={card}></LibraryCard>
+                    <LibraryCard name={card} onHover={handleCardHover}></LibraryCard>
                   </span>
                 )
               })}
