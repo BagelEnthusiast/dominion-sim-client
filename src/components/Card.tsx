@@ -9,8 +9,9 @@ interface Props {
 export const Card = (props: Props) => {
   return (
     <div>
+      <div>{props.quantity} </div>
       <div onMouseOver={props.onHover}>
-        {props.quantity} {props.name}
+        {props.name}
       </div>
     </div>
   )
