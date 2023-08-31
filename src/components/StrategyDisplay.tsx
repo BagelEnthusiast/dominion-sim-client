@@ -1,6 +1,6 @@
 import { MouseEventHandler, KeyboardEvent, useCallback, useState } from "react";
-import { updateStrategy } from "../apiCalls"
-import { Strategy } from "../interfaces"
+import { createShoppingListItem, updateStrategy } from "../apiCalls"
+import { ShoppingListItem, Strategy } from "../interfaces"
 import { Card } from "./Card"
 import '../DeckApp.css'
 import { v4 as uuidv4 } from 'uuid'
@@ -25,13 +25,15 @@ export const StrategyDisplay = (props: Props) => {
 
   const addCard = useCallback((name: string) => {
     console.log('update strategy hit')
-    strategy.shoppingList.push({
+    const newItem: ShoppingListItem = {
       id: uuidv4(),
       card: name,
       quantity: 1
-    })
+    }
+    strategy.shoppingList.push(newItem)
     setStrategy({ ...strategy });
     setNewCard('')
+    createShoppingListItem(strategy.id, props.username, newItem)
     //updateStrategy(strategy, props.username)
   }, [strategy]);
 
@@ -39,7 +41,7 @@ export const StrategyDisplay = (props: Props) => {
     if (event.key === 'Enter') {
       addCard(name)
     }
-  },[strategy])
+  }, [strategy])
   return (
     <div id='strategy-container'>
       <h3 onClick={() => setOpen(!open)}>{strategy.label}</h3>

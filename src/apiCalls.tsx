@@ -1,4 +1,4 @@
-import { Strategy, CardSet, UserData } from "./interfaces"
+import { Strategy, CardSet, UserData, ShoppingListItem } from "./interfaces"
 const isDev = import.meta.env.DEV
 const apiUrl = isDev ? 'http://localhost:3000' : 'https://domserver.mrluckywaffles.com'
 
@@ -34,6 +34,30 @@ export async function createStrategy(strat: Strategy, username: string): Promise
     return response;
   } catch (error) {
     console.error('Error creating strategy', error);
+    throw error;
+  }
+}
+
+export async function createShoppingListItem(strategyId: string, username: string, item: ShoppingListItem): Promise<Response> {
+  try {
+    const response: Response = await fetch(`${apiUrl}/user/strategy/shoppingList/shoppingListItem/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        strategyId,
+        username,
+        item
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Create shopping list item response error');
+    }
+    return response;
+  } catch (error) {
+    console.error('Error creating shopping list item', error);
     throw error;
   }
 }
