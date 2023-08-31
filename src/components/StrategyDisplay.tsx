@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { MouseEventHandler, useCallback, useState } from "react";
 import { updateStrategy } from "../apiCalls"
 import { Strategy } from "../interfaces"
 import { Card } from "./Card"
@@ -6,7 +6,8 @@ import '../DeckApp.css'
 
 interface Props {
   initialStrategy: Strategy,
-  username: string
+  username: string,
+  handleHover: MouseEventHandler<HTMLDivElement>
 }
 
 export const StrategyDisplay = (props: Props) => {
@@ -30,7 +31,7 @@ export const StrategyDisplay = (props: Props) => {
               console.log(shoppingItem)
               return (
                 <div key={`item-${index}`}>
-                  <Card name={shoppingItem.card} quantity={shoppingItem.quantity}></Card>
+                  <Card name={shoppingItem.card} quantity={shoppingItem.quantity} onHover={props.handleHover}></Card>
                   <button onClick={() => updateCard(index, +1)}> + </button>
                   <button onClick={() => updateCard(index, -1)}> - </button>
                 </div>

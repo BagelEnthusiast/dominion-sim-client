@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FormEvent, ReactEventHandler, MouseEventHandler } from 'react'
+import { useState, useEffect, useCallback, FormEvent } from 'react'
 import { LibraryCard } from './components/LibraryCard'
 import { Strategy, ShoppingListItem } from './interfaces'
 import { createStrategy, getCardDataAsync, getUserStrategiesAsync } from './apiCalls'
@@ -19,7 +19,6 @@ interface eventTarget {
   cardList: { value: string }
 }
 
-
 export function DeckApp() {
   console.log('deckApp mounted')
   const [cardList, setCardList] = useState<string[] | undefined>()
@@ -28,14 +27,13 @@ export function DeckApp() {
   const [modalOpen, setModalOpen] = useState(false)
   const [preview, setPreview] = useState('copper')
 
-
   const handleCardHover = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     // is this better than the unkown casting in handleformsubmit?
-    const t = event.target as HTMLDivElement
-    if (t.textContent === null) {
+    const target = event.target as HTMLDivElement
+    if (target.textContent === null) {
       throw new Error('This code should not be accessible')
     }
-    setPreview(t.textContent)
+    setPreview(target.textContent)
   }, [preview])
 
   const handleFormSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
@@ -149,7 +147,7 @@ export function DeckApp() {
                     console.log('making a strategy component')
                     return (
                       <div key={strat.id}>
-                        <StrategyDisplay initialStrategy={strat} username={username} />
+                        <StrategyDisplay initialStrategy={strat} username={username} handleHover={handleCardHover}/>
                       </div>
                     )
                   })}

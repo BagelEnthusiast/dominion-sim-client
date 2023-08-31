@@ -1,18 +1,17 @@
+import { MouseEventHandler } from "react";
+
 interface Props {
   name: string,
-  quantity: number
+  quantity: number,
+  onHover: MouseEventHandler<HTMLDivElement>
 }
 
 export const Card = (props: Props) => {
-  const srcUrl = `cards/${props.name}.jpg`;
   return (
     <div>
-      {/* <img src={srcUrl} style={{
-        height: '200px',
-      }}/> */}
-      <p>{props.quantity} {props.name}</p>
-          {/* <button onClick={() => updateCard(index, +1)}> + </button>
-          <button onClick={() => updateCard(index, -1)}> - </button> */}
+      <div onMouseOver={props.onHover}>
+        {props.quantity} {props.name}
+      </div>
     </div>
   )
 }

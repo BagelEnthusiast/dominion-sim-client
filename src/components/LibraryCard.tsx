@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import styles from './LibraryCard.module.css'
 
 interface Props {
