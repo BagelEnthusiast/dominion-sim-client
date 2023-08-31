@@ -1,8 +1,9 @@
-import { MouseEventHandler, useCallback, useState } from "react";
+import { MouseEventHandler, KeyboardEvent, useCallback, useState } from "react";
 import { updateStrategy } from "../apiCalls"
 import { Strategy } from "../interfaces"
 import { Card } from "./Card"
 import '../DeckApp.css'
+import { v4 as uuidv4 } from 'uuid'
 
 interface Props {
   initialStrategy: Strategy,
@@ -13,7 +14,8 @@ interface Props {
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
   const [open, setOpen] = useState(false)
-  //creates stable function reference
+  const [newCard, setNewCard] = useState('')
+
   const updateCard = useCallback((arrIndex: number, delta: number) => {
     console.log('update strategy hit')
     strategy.shoppingList[arrIndex].quantity += delta;
@@ -21,6 +23,23 @@ export const StrategyDisplay = (props: Props) => {
     updateStrategy(strategy, props.username)
   }, [strategy]);
 
+  const addCard = useCallback((name: string) => {
+    console.log('update strategy hit')
+    strategy.shoppingList.push({
+      id: uuidv4(),
+      card: name,
+      quantity: 1
+    })
+    setStrategy({ ...strategy });
+    setNewCard('')
+    //updateStrategy(strategy, props.username)
+  }, [strategy]);
+
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>, name: string) => {
+    if (event.key === 'Enter') {
+      addCard(name)
+    }
+  },[strategy])
   return (
     <div id='strategy-container'>
       <h3 onClick={() => setOpen(!open)}>{strategy.label}</h3>
@@ -38,7 +57,15 @@ export const StrategyDisplay = (props: Props) => {
               )
             })}
           </div>
-          <input placeholder="Add Card..."/>
+          <input
+            value={newCard}
+            onChange={e => setNewCard(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, newCard)}
+            placeholder="Find and add cards..."
+          />
+          <button onClick={() => addCard(newCard)}>
+            +
+          </button>
         </div>
       }
 

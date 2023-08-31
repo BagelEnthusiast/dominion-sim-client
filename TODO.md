@@ -1,7 +1,8 @@
 ## Client
-* hover functionality for cards within strategies
+* validate form input
+* validate add card within strategy input
+* change strategy container card map to use uuid instead of index
 * ability to add cards to new strategy
-* don't make chart api call if no strategies with cards - use a filter?
 * validate JWT
 
 ## Server
