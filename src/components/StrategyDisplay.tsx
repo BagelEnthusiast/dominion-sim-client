@@ -42,12 +42,12 @@ export const StrategyDisplay = (props: Props) => {
       addCard(name)
     }
   }, [strategy])
+
   return (
-    <div id='strategy-container'>
+    <div className="strategy-container">
       <h3 onClick={() => setOpen(!open)}>{strategy.label}</h3>
       {open &&
         <div>
-          <div>
             {strategy.shoppingList.map((shoppingItem, index) => {
               console.log(shoppingItem)
               return (
@@ -58,19 +58,15 @@ export const StrategyDisplay = (props: Props) => {
                 </div>
               )
             })}
-          </div>
           <input
             value={newCard}
             onChange={e => setNewCard(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, newCard)}
             placeholder="Find and add cards..."
           />
-          <button onClick={() => addCard(newCard)}>
-            +
-          </button>
+          <button onClick={() => addCard(newCard)}> + </button>
         </div>
       }
-
     </div>
   )
 }

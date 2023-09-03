@@ -38,6 +38,29 @@ export async function createStrategy(strat: Strategy, username: string): Promise
   }
 }
 
+export async function deleteStrategy(id: string, username: string): Promise<Response> {
+  try {
+    const response: Response = await fetch(`${apiUrl}/user/strategy/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id,
+        username
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Delete strategy response error');
+    }
+    return response;
+  } catch (error) {
+    console.error('Error deleting strategy', error);
+    throw error;
+  }
+}
+
 export async function createShoppingListItem(strategyId: string, username: string, item: ShoppingListItem): Promise<Response> {
   try {
     const response: Response = await fetch(`${apiUrl}/user/strategy/shoppingList/shoppingListItem/create`, {

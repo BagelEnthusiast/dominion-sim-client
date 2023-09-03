@@ -11,12 +11,13 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: true,
+    parser: '@typescript-eslint/parser',
+    // ecmaVersion: 'latest',
+    // sourceType: 'module',
+    project: 'tsconfig.eslint.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', '@typescript-eslint', 'react-hooks'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
