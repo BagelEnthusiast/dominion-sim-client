@@ -51,6 +51,8 @@ export function LoggedInApp({ username }: { username: string }) {
   const handleDeleteStrategy = useCallback((strategyId: string) => {
     console.log("hitting delete handler");
     deleteStrategy(strategyId, username);
+    //why is this bad and the other method correct?
+    //setStrategies(strategies?.filter((s) => s.id !== strategyId))
     setStrategies((prior) => prior?.filter((s) => s.id !== strategyId));
   }, []);
 

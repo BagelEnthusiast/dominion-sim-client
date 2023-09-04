@@ -16,9 +16,6 @@ export interface eventTarget {
 export function DeckApp() {
   console.log("deckApp mounted");
   const username = useAccount();
- 
-  // const location = useLocation();
-  //let from = ((location.state as any)?.from?.pathname as string) || '/';
 
   return (
     <div>

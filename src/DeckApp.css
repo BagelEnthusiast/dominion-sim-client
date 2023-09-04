@@ -26,8 +26,13 @@
   background-color: white;
   padding: 1em;
 }
-
+.app-left-column {
+  flex: 1;
+}
 .chart-container {
+  flex: 2;
+}
+.app-right-column {
   flex: 1;
 }
 
