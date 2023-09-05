@@ -16,15 +16,33 @@ export const StrategyDisplay = (props: Props) => {
   const [open, setOpen] = useState(false)
   const [newCard, setNewCard] = useState('')
 
-  const updateCard = useCallback((arrIndex: number, delta: number) => {
-    console.log('update strategy hit')
-    strategy.shoppingList[arrIndex].quantity += delta;
+  const incrementQuantity = useCallback((arrIndex: number) => {
+    const item = strategy.shoppingList[arrIndex]
+    //skip zero
+    if (item.quantity === Infinity) {
+      item.quantity = 1
+    }
+    else {
+      item.quantity += 1;
+    }
+    setStrategy({ ...strategy });
+    updateStrategy(strategy, props.username)
+  }, [strategy]);
+
+  const decrementQuantity = useCallback((arrIndex: number) => {
+    const item = strategy.shoppingList[arrIndex]
+    //skip zero
+    if (item.quantity <= 1) {
+      item.quantity = Infinity
+    }
+    else {
+      item.quantity -= 1;
+    }
     setStrategy({ ...strategy });
     updateStrategy(strategy, props.username)
   }, [strategy]);
 
   const addCard = useCallback((name: string) => {
-    console.log('update strategy hit')
     const newItem: ShoppingListItem = {
       id: uuidv4(),
       card: name,
@@ -51,10 +69,10 @@ export const StrategyDisplay = (props: Props) => {
             {strategy.shoppingList.map((shoppingItem, index) => {
               console.log(shoppingItem)
               return (
-                <div key={`item-${index}`}>
+                <div key={shoppingItem.id}>
                   <Card name={shoppingItem.card} quantity={shoppingItem.quantity} onHover={props.handleHover}></Card>
-                  <button onClick={() => updateCard(index, +1)}> + </button>
-                  <button onClick={() => updateCard(index, -1)}> - </button>
+                  <button onClick={() => incrementQuantity(index)}> + </button>
+                  <button onClick={() => decrementQuantity(index)}> - </button>
                 </div>
               )
             })}

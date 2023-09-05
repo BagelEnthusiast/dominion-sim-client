@@ -1,12 +1,12 @@
 ## Client
-* Make delete strategy button
 * validate form input
 * validate add card within strategy input
 * change strategy container card map to use uuid instead of index
-* validate JWT
+
+* Format strategies to look nicer
 
 ## Server
-* Cleanup interfaces in server file
+* validate JWT
 
 # Stretch Goals
 * GraphQL api - look into URQL and express graphql and https://the-guild.dev/graphql/codegen 

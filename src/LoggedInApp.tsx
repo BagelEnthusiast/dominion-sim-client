@@ -123,12 +123,12 @@ export function LoggedInApp({ username }: { username: string }) {
         <div className="library">
           {cardList?.map((card, index) => {
             return (
-              <span key={`card-${index}`}>
+              <div key={`card-${index}`}>
                 <LibraryCard
                   name={card}
                   onHover={handleCardHover}
                 ></LibraryCard>
-              </span>
+              </div>
             );
           })}
         </div>
