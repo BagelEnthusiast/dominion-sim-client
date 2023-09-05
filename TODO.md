@@ -1,4 +1,5 @@
 ## Client
+* refresh Chart button
 * validate form input
 * validate add card within strategy input
 * change strategy container card map to use uuid instead of index

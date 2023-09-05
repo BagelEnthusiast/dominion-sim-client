@@ -1,5 +1,5 @@
 import { MouseEventHandler, KeyboardEvent, useCallback, useState } from "react";
-import { createShoppingListItem, updateStrategy } from "../apiCalls"
+import { createShoppingListItem, deleteShoppingListItem, updateStrategy } from "../apiCalls"
 import { ShoppingListItem, Strategy } from "../interfaces"
 import { Card } from "./Card"
 import '../DeckApp.css'
@@ -55,6 +55,14 @@ export const StrategyDisplay = (props: Props) => {
     //updateStrategy(strategy, props.username)
   }, [strategy]);
 
+  const deleteCard = useCallback((item: ShoppingListItem) => {
+    const newShoppingList = strategy.shoppingList.filter(shoppingItem => shoppingItem.id !== item.id)
+    const newStrategy: Strategy = strategy
+    newStrategy.shoppingList = newShoppingList
+    setStrategy({...newStrategy})
+    deleteShoppingListItem(strategy.id, props.username, item)
+  }, [strategy])
+
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>, name: string) => {
     if (event.key === 'Enter') {
       addCard(name)
@@ -73,6 +81,7 @@ export const StrategyDisplay = (props: Props) => {
                   <Card name={shoppingItem.card} quantity={shoppingItem.quantity} onHover={props.handleHover}></Card>
                   <button onClick={() => incrementQuantity(index)}> + </button>
                   <button onClick={() => decrementQuantity(index)}> - </button>
+                  <button onClick={() => deleteCard(shoppingItem)}>Delete Card</button>
                 </div>
               )
             })}

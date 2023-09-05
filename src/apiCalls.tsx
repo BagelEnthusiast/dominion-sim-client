@@ -85,6 +85,30 @@ export async function createShoppingListItem(strategyId: string, username: strin
   }
 }
 
+export async function deleteShoppingListItem(strategyId: string, username: string, item: ShoppingListItem): Promise<Response> {
+  try {
+    const response: Response = await fetch(`${apiUrl}/user/strategy/shoppingList/shoppingListItem/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        strategyId,
+        username,
+        item
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Delete shopping list item response error');
+    }
+    return response;
+  } catch (error) {
+    console.error('Error deleting shopping list item', error);
+    throw error;
+  }
+}
+
 export async function updateStrategy(strat: Strategy, username: string): Promise<Response> {
   console.log(strat);
   try {
