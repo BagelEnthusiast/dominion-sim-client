@@ -26,6 +26,10 @@
   background-color: white;
   padding: 1em;
 }
+.column {
+  padding: 1em;
+  border: 1px solid black;
+}
 .app-left-column {
   flex: 1;
 }

@@ -45,21 +45,22 @@ export function LoggedInApp({ username }: { username: string }) {
       setStrategies(newStrategies);
       createStrategy(newStrategy, username);
     },
-    [strategies, createStrategy, username]
+    [strategies, username]
   );
 
   const handleDeleteStrategy = useCallback((strategyId: string) => {
     console.log("hitting delete handler");
     deleteStrategy(strategyId, username);
     //why is this bad and the other method correct?
-    //setStrategies(strategies?.filter((s) => s.id !== strategyId))
+    // setStrategies(strategies?.filter((s) => s.id !== strategyId))
     setStrategies((prior) => prior?.filter((s) => s.id !== strategyId));
   }, []);
 
-  useEffect(() => {
-    console.log(username)
-    console.log(handleDeleteStrategy);
-  }, []);
+  // testing linting
+  // useEffect(() => {
+  //   console.log(username)
+  //   console.log(handleDeleteStrategy);
+  // }, []);
 
   const handleCardHover = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -113,7 +114,7 @@ export function LoggedInApp({ username }: { username: string }) {
           <button onClick={() => setModalOpen(false)}> X </button>
         </MyModal>
       )}
-      <div className="app-left-column">
+      <div className="column app-left-column">
         <div className="preview-container">
           {cardList && (
             //placeholder - build card image preview component
@@ -133,10 +134,10 @@ export function LoggedInApp({ username }: { username: string }) {
           })}
         </div>
       </div>
-      <div className="chart-container">
+      <div className="column chart-container">
         {strategies && <Chart strategies={strategies} />}
       </div>
-      <div className="app-right-column">
+      <div className="column app-right-column">
         <h1>Strategies</h1>
         <button
           id="new-strategy-button"

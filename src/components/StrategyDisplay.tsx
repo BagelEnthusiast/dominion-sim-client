@@ -39,7 +39,7 @@ export const StrategyDisplay = (props: Props) => {
       item.quantity -= 1;
     }
     setStrategy({ ...strategy });
-    updateStrategy(strategy, props.username)
+    updateStrategy(strategy, props.username) // todo
   }, [strategy]);
 
   const addCard = useCallback((name: string) => {
