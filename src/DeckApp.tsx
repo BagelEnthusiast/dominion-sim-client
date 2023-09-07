@@ -1,20 +1,19 @@
-import "./DeckApp.css";
-import { useAccount } from "./hooks/useAccount";
-import { LoggedOutApp } from "./LoggedOutApp";
-import { LoggedInApp } from "./LoggedInApp";
+import './DeckApp.css';
+import { useAccount } from './hooks/useAccount';
+import { LoggedOutApp } from './LoggedOutApp';
+import { LoggedInApp } from './LoggedInApp';
 
 const isDev = import.meta.env.DEV;
 export const apiUrl = isDev
-  ? "http://localhost:5173"
-  : "https://dominion-sim-client.vercel.app/";
+  ? 'http://localhost:5173'
+  : 'https://dominion-sim-client.vercel.app/';
 
-export interface eventTarget {
+export interface EventTarget {
   name: { value: string };
   cardList: { value: string };
 }
 
 export function DeckApp() {
-  console.log("deckApp mounted");
   const username = useAccount();
 
   return (
@@ -23,5 +22,3 @@ export function DeckApp() {
     </div>
   );
 }
-
-

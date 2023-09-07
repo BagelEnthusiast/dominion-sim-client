@@ -12,7 +12,7 @@ import { Chart } from "./components/Chart";
 import { MyModal } from "./components/MyModel";
 import { v4 as uuidv4 } from "uuid";
 import { CardPreview } from "./components/CardPreview";
-import { eventTarget } from "./DeckApp";
+import { EventTarget } from "./DeckApp";
 
 export function LoggedInApp({ username }: { username: string }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,7 +24,7 @@ export function LoggedInApp({ username }: { username: string }) {
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       //try to find alternative to casting here
-      const target = event.target as unknown as eventTarget;
+      const target = event.target as unknown as EventTarget;
       if (!strategies) {
         throw new Error("This code should not be accessible");
       }
@@ -56,11 +56,11 @@ export function LoggedInApp({ username }: { username: string }) {
     setStrategies((prior) => prior?.filter((s) => s.id !== strategyId));
   }, []);
 
-  // testing linting
-  // useEffect(() => {
-  //   console.log(username)
-  //   console.log(handleDeleteStrategy);
-  // }, []);
+  
+  useCallback(() => {
+    console.log(username)
+    console.log(handleDeleteStrategy);
+  }, []);
 
   const handleCardHover = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
