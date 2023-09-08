@@ -71,7 +71,7 @@ export const StrategyDisplay = (props: Props) => {
 
   return (
     <div className="strategy-container">
-      <h3 onClick={() => setOpen(!open)}>{strategy.label}</h3>
+      <h3 className="clickable" onClick={() => setOpen(!open)}>{strategy.label}</h3>
       {open &&
         <div>
             {strategy.shoppingList.map((shoppingItem, index) => {

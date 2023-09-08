@@ -78,3 +78,11 @@
 .active, .collapsible:hover {
   background-color: #ccc;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
