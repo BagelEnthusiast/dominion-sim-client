@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mpaulprojects/dominion-sim-chart": "^0.0.4",
+    "@mpaulprojects/dominion-sim-chart": "^0.0.5",
     "axios": "^1.4.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "jose": "^4.14.4",
