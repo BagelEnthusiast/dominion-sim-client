@@ -19,6 +19,7 @@ export function LoggedInApp({ username }: { username: string }) {
   const [cardList, setCardList] = useState<string[] | undefined>();
   const [strategies, setStrategies] = useState<Strategy[] | undefined>();
   const [preview, setPreview] = useState("copper");
+  const [invalidStrings, setInvalidStrings] = useState<string[] | undefined>();
 
   const handleFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
@@ -29,6 +30,24 @@ export function LoggedInApp({ username }: { username: string }) {
         throw new Error("This code should not be accessible");
       }
       const cardStrings = target.cardList.value.split("\n");
+      const invalidArr = cardStrings.filter(string => {
+        console.log(string)
+        // console.log(cardList)
+        if (cardList?.includes(string)) {
+          return false
+        }
+        return true
+        // console.log(cardList?.includes(string))
+        // return !(cardList?.includes(string))
+      }
+      )
+      setInvalidStrings([...invalidArr])
+      console.log(invalidStrings)
+      if (!invalidStrings) {
+        console.log('invalid strings: ', invalidStrings)
+        return 
+      }
+      
       const newShoppingList: ShoppingListItem[] = cardStrings.map((string) => {
         return {
           id: uuidv4(),
@@ -44,6 +63,7 @@ export function LoggedInApp({ username }: { username: string }) {
       const newStrategies = [...strategies, newStrategy];
       setStrategies(newStrategies);
       createStrategy(newStrategy, username);
+      setModalOpen(false)
     },
     [strategies, username]
   );
@@ -97,6 +117,15 @@ export function LoggedInApp({ username }: { username: string }) {
         <MyModal onExit={() => setModalOpen(false)}>
           <div className="modal-form-wrapper">
             <h1>Add Strategy</h1>
+            {invalidStrings && (
+              invalidStrings.map(s => {
+                return (
+                  <div key={uuidv4()}>
+                    <p>{`${s}\n`}</p>
+                  </div>
+                )
+              })
+            )}
             <form onSubmit={handleFormSubmit}>
               <fieldset>
                 <label>

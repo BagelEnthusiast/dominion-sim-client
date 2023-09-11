@@ -1,7 +1,7 @@
 ## MVP goals
-* Add strategy modal auto close
+* fix how infinity is stored on backend
+* add quantities to textarea in form
 * Give buttons some styling
-* make clickable elements look clickable
 * refresh Chart button
 * validate form input
 * validate add card within strategy input
