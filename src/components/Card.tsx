@@ -6,12 +6,17 @@ interface Props {
   onHover: MouseEventHandler<HTMLDivElement>
 }
 
+const prettyCard: Record<string, string> = {
+  'market': 'Market',
+  'council_room': 'Council Room',
+};
+
 export const Card = (props: Props) => {
   return (
     <div>
-      <div>{props.quantity} </div>
+      <div>{props.quantity === -1 ? '∞' : props.quantity} </div>
       <div onMouseOver={props.onHover}>
-        {props.name}
+        {prettyCard[props.name] ?? props.name}
       </div>
     </div>
   )

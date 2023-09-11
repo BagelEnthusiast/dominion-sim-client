@@ -19,35 +19,27 @@ export function LoggedInApp({ username }: { username: string }) {
   const [cardList, setCardList] = useState<string[] | undefined>();
   const [strategies, setStrategies] = useState<Strategy[] | undefined>();
   const [preview, setPreview] = useState("copper");
-  const [invalidStrings, setInvalidStrings] = useState<string[] | undefined>();
+  const [invalidStrings, setInvalidStrings] = useState<string[]>([]);
 
   const handleFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       //try to find alternative to casting here
       const target = event.target as unknown as EventTarget;
-      if (!strategies) {
+      if (!strategies || !cardList) {
         throw new Error("This code should not be accessible");
       }
-      const cardStrings = target.cardList.value.split("\n");
-      const invalidArr = cardStrings.filter(string => {
-        console.log(string)
-        // console.log(cardList)
-        if (cardList?.includes(string)) {
-          return false
-        }
-        return true
-        // console.log(cardList?.includes(string))
-        // return !(cardList?.includes(string))
+      const cardStrings = target.cardList.value.trim().split("\n").map(s => s.trim());
+      const invalidArr = cardStrings.filter((string) => {
+        return !cardList.includes(string);
+      });
+      setInvalidStrings([...invalidArr]);
+      console.log(invalidStrings);
+      if (invalidArr.length > 0) {
+        console.log("invalid strings: ", invalidArr);
+        return;
       }
-      )
-      setInvalidStrings([...invalidArr])
-      console.log(invalidStrings)
-      if (!invalidStrings) {
-        console.log('invalid strings: ', invalidStrings)
-        return 
-      }
-      
+
       const newShoppingList: ShoppingListItem[] = cardStrings.map((string) => {
         return {
           id: uuidv4(),
@@ -63,9 +55,9 @@ export function LoggedInApp({ username }: { username: string }) {
       const newStrategies = [...strategies, newStrategy];
       setStrategies(newStrategies);
       createStrategy(newStrategy, username);
-      setModalOpen(false)
+      setModalOpen(false);
     },
-    [strategies, username]
+    [strategies, username, cardList]
   );
 
   const handleDeleteStrategy = useCallback((strategyId: string) => {
@@ -76,9 +68,8 @@ export function LoggedInApp({ username }: { username: string }) {
     setStrategies((prior) => prior?.filter((s) => s.id !== strategyId));
   }, []);
 
-  
   useCallback(() => {
-    console.log(username)
+    console.log(username);
     console.log(handleDeleteStrategy);
   }, []);
 
@@ -117,15 +108,14 @@ export function LoggedInApp({ username }: { username: string }) {
         <MyModal onExit={() => setModalOpen(false)}>
           <div className="modal-form-wrapper">
             <h1>Add Strategy</h1>
-            {invalidStrings && (
-              invalidStrings.map(s => {
+            {invalidStrings &&
+              invalidStrings.map((s) => {
                 return (
                   <div key={uuidv4()}>
                     <p>{`${s}\n`}</p>
                   </div>
-                )
-              })
-            )}
+                );
+              })}
             <form onSubmit={handleFormSubmit}>
               <fieldset>
                 <label>
