@@ -29,7 +29,7 @@ export function LoggedInApp({ username }: { username: string }) {
       if (!strategies || !cardList) {
         throw new Error("This code should not be accessible");
       }
-      const cardStrings = target.cardList.value.trim().split("\n").map(s => s.trim());
+      const cardStrings = target.cardList.value.trim().split("\n").map(s => s.trim()).filter(s => s !== '');
       const invalidArr = cardStrings.filter((string) => {
         return !cardList.includes(string);
       });

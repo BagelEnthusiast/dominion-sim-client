@@ -19,7 +19,7 @@ export const StrategyDisplay = (props: Props) => {
   const incrementQuantity = useCallback((arrIndex: number) => {
     const item = strategy.shoppingList[arrIndex]
     //skip zero
-    if (item.quantity === Infinity) {
+    if (item.quantity === -1) {
       item.quantity = 1
     }
     else {
@@ -33,7 +33,7 @@ export const StrategyDisplay = (props: Props) => {
     const item = strategy.shoppingList[arrIndex]
     //skip zero
     if (item.quantity <= 1) {
-      item.quantity = Infinity
+      item.quantity = -1
     }
     else {
       item.quantity -= 1;
