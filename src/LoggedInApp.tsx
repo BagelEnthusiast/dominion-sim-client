@@ -67,12 +67,7 @@ export function LoggedInApp({ username }: { username: string }) {
     // setStrategies(strategies?.filter((s) => s.id !== strategyId))
     setStrategies((prior) => prior?.filter((s) => s.id !== strategyId));
   }, []);
-
-  useCallback(() => {
-    console.log(username);
-    console.log(handleDeleteStrategy);
-  }, []);
-
+  
   const handleCardHover = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       // is this better than the unkown casting in handleformsubmit?

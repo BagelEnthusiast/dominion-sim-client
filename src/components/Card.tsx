@@ -6,9 +6,25 @@ interface Props {
   onHover: MouseEventHandler<HTMLDivElement>
 }
 
-const prettyCard: Record<string, string> = {
-  'market': 'Market',
+export const prettyCard: Record<string, string> = {
+  'copper': 'Copper',
+  'silver': 'Silver',
+  'gold': 'Gold',
+  'estate': 'Estate',
+  'duchy': 'Duchy',
+  'province': 'Province',
+  'curse': 'Curse',
+  'chapel': 'Chapel',
+  'village': 'Village',
+  'moneylender': 'Moneylender',
+  'poacher': 'Poacher',
+  'smithy': 'Smithy',
   'council_room': 'Council Room',
+  'festival': 'Festival',
+  'laboratory': 'Laboratory',
+  'library': 'Library',
+  'market': 'Market',
+  'mine': 'Mine'
 };
 
 export const Card = (props: Props) => {

@@ -1,9 +1,7 @@
 ## MVP goals
-* fix how infinity is stored on backend
 * add quantities to textarea in form
 * Give buttons some styling
 * refresh Chart button
-* validate form input
 * validate add card within strategy input
 * autocomplete for find cards
 
