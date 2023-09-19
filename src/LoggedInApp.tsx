@@ -161,7 +161,7 @@ export function LoggedInApp({ username }: { username: string }) {
           Add Strategy{" "}
         </button>
         <div className="strategies-container">
-          {strategies && (
+          {(strategies && cardList) && (
             <div>
               {strategies.map((strat) => {
                 console.log("making a strategy component");
@@ -171,6 +171,7 @@ export function LoggedInApp({ username }: { username: string }) {
                       initialStrategy={strat}
                       username={username}
                       handleHover={handleCardHover}
+                      library={cardList}
                     />
                     <button onClick={() => handleDeleteStrategy(strat.id)}>
                       Delete Strategy

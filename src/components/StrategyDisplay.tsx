@@ -8,13 +8,15 @@ import { v4 as uuidv4 } from 'uuid'
 interface Props {
   initialStrategy: Strategy,
   username: string,
-  handleHover: MouseEventHandler<HTMLDivElement>
+  library: string[]
+  handleHover: MouseEventHandler<HTMLDivElement>,
 }
 
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
   const [open, setOpen] = useState(false)
   const [newCard, setNewCard] = useState('')
+  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([])
 
   const incrementQuantity = useCallback((arrIndex: number) => {
     const item = strategy.shoppingList[arrIndex]
@@ -69,6 +71,27 @@ export const StrategyDisplay = (props: Props) => {
     }
   }, [strategy])
 
+  const updateSuggestions = (event: any) => {
+    console.log('on change event: ', event)
+    console.log('type of event: ', typeof(event))
+    if (!props.library) {
+      throw new Error("This code should not be accessible");
+    }
+    const newSuggestions = props.library.filter(card => {
+      const substring = card.substring(0, event.length)
+      if (event === substring) {
+        return card
+      }
+      else {
+        return
+      }
+    })
+    setFilteredSuggestions([...newSuggestions])
+    setNewCard(event)
+    console.log('new suggestions array: ', newSuggestions)
+  }
+
+
   return (
     <div className="strategy-container">
       <h3 className="clickable" onClick={() => setOpen(!open)}>{strategy.label}</h3>
@@ -87,7 +110,7 @@ export const StrategyDisplay = (props: Props) => {
             })}
           <input
             value={newCard}
-            onChange={e => setNewCard(e.target.value)}
+            onChange={e => updateSuggestions(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, newCard)}
             placeholder="Find and add cards..."
           />

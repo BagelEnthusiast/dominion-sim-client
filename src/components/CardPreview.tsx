@@ -17,7 +17,7 @@ const uglyCard: Record<string, string> = {
     'Smithy': 'smithy',
     'Council Room': 'council_room',
     'Festival': 'festival',
-    'Laboratory:': 'laboratory',
+    'Laboratory': 'laboratory',
     'Library': 'library',
     'Market': 'market',
     'Mine': 'mine'
