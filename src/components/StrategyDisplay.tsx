@@ -1,4 +1,4 @@
-import { MouseEventHandler, KeyboardEvent, useCallback, useState } from "react";
+import { MouseEventHandler, KeyboardEvent, useCallback, useState, useRef } from "react";
 import {
   createShoppingListItem,
   deleteShoppingListItem,
@@ -22,6 +22,8 @@ export const StrategyDisplay = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [newCard, setNewCard] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+  const [boxFocus, setBoxFocus] = useState(false)
+  const inputReference = useRef<HTMLInputElement>(null);
 
   const incrementQuantity = useCallback(
     (arrIndex: number) => {
@@ -87,6 +89,12 @@ export const StrategyDisplay = (props: Props) => {
       if (event.key === "Enter") {
         addCard(name);
       }
+      if (event.key === "ArrowDown") {
+        setBoxFocus(!boxFocus)
+        if (inputReference.current){
+          inputReference.current.blur();
+        }
+      }
     },
     [strategy]
   );
@@ -137,13 +145,14 @@ export const StrategyDisplay = (props: Props) => {
           <div className="input-container">
             <div>
               <input
+                ref={inputReference}
                 value={newCard}
                 onChange={(e) => updateSuggestions(e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e, newCard)}
                 placeholder="Find and add cards..."
               />
               {newCard !== "" && (
-                <SuggestionBox suggestions={filteredSuggestions} />
+                <SuggestionBox suggestions={filteredSuggestions} focus={boxFocus}/>
               )}
             </div>
             <button onClick={() => addCard(newCard)}> Add </button>

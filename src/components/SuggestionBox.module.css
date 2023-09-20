@@ -1,4 +1,9 @@
 .container {
     z-index: 2;
-    background-color: aquamarine;
+    background-color:gainsboro;
+}
+
+.active {
+    background-color:gray;
+    text-decoration: underline;
 }
