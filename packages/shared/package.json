@@ -1,0 +1,28 @@
+{
+    "name": "@dominio-sim/shared",
+    "version": "0.0.1",
+    "description": "Shared types declarations for dominio-sim",
+    "author": "",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TODO"
+    },
+    "bugs": "https://github.com/TODO/issues",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "index.d.ts",
+    "files": [
+        "dist",
+        "client.d.ts",
+        "index.d.ts"
+    ],
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "build": "tsup src/index.ts",
+        "dev": "pnpm build --watch",
+        "prepublishOnly": "pnpm run build"
+    }
+}
