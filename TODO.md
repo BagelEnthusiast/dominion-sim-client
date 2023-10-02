@@ -1,5 +1,6 @@
 ## MVP goals
-* autocomplete for find cards
+* make autocomplete box and input a reusable component
+* add support for example account
 * add quantities to textarea in form
 * Give buttons some styling
 * refresh Chart button

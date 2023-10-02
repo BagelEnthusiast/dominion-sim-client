@@ -1,4 +1,4 @@
-import { MouseEventHandler, KeyboardEvent, useCallback, useState, useRef } from "react";
+import { MouseEventHandler, useCallback, useState } from "react";
 import {
   createShoppingListItem,
   deleteShoppingListItem,
@@ -20,10 +20,6 @@ interface Props {
 export const StrategyDisplay = (props: Props) => {
   const [strategy, setStrategy] = useState(props.initialStrategy);
   const [open, setOpen] = useState(false);
-  const [newCard, setNewCard] = useState("");
-  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
-  const [boxFocus, setBoxFocus] = useState(false)
-  const inputReference = useRef<HTMLInputElement>(null);
 
   const incrementQuantity = useCallback(
     (arrIndex: number) => {
@@ -64,7 +60,6 @@ export const StrategyDisplay = (props: Props) => {
       };
       strategy.shoppingList.push(newItem);
       setStrategy({ ...strategy });
-      setNewCard("");
       createShoppingListItem(strategy.id, props.username, newItem);
       //updateStrategy(strategy, props.username)
     },
@@ -83,40 +78,6 @@ export const StrategyDisplay = (props: Props) => {
     },
     [strategy]
   );
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLInputElement>, name: string) => {
-      if (event.key === "Enter") {
-        addCard(name);
-      }
-      if (event.key === "ArrowDown") {
-        setBoxFocus(!boxFocus)
-        if (inputReference.current){
-          inputReference.current.blur();
-        }
-      }
-    },
-    [strategy]
-  );
-
-  const updateSuggestions = (event: any) => {
-    console.log("on change event: ", event);
-    console.log("type of event: ", typeof event);
-    if (!props.library) {
-      throw new Error("This code should not be accessible");
-    }
-    const newSuggestions = props.library.filter((card) => {
-      const substring = card.substring(0, event.length);
-      if (event === substring) {
-        return card;
-      } else {
-        return;
-      }
-    });
-    setFilteredSuggestions([...newSuggestions]);
-    setNewCard(event);
-    console.log("new suggestions array: ", newSuggestions);
-  };
 
   return (
     <div className="strategy-container">
@@ -142,21 +103,10 @@ export const StrategyDisplay = (props: Props) => {
               </div>
             );
           })}
-          <div className="input-container">
-            <div>
-              <input
-                ref={inputReference}
-                value={newCard}
-                onChange={(e) => updateSuggestions(e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, newCard)}
-                placeholder="Find and add cards..."
-              />
-              {newCard !== "" && (
-                <SuggestionBox suggestions={filteredSuggestions} focus={boxFocus}/>
-              )}
-            </div>
-            <button onClick={() => addCard(newCard)}> Add </button>
-          </div>
+          <SuggestionBox 
+            suggestions={props.library} 
+            onFinish={card => addCard(card)}
+          />
         </div>
       )}
     </div>

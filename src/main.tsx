@@ -9,7 +9,6 @@ import { OauthApp } from './OauthApp.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  
     <Router>
       <Routes>
         <Route path="/" element={<DeckApp />} />
