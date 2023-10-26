@@ -12,8 +12,10 @@ interface Props {
 export const SuggestionBox = (props: Props) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
   const [itemIndex, setItemIndex] = useState(0);
+  const [newCardInput, setNewCardInput] = useState('')
 
   const updateSuggestions = (typed: string) => {
+    setNewCardInput(typed)
     setItemIndex(0);
     if (typed.length === 0) { 
       setFilteredSuggestions([]);
@@ -36,6 +38,7 @@ export const SuggestionBox = (props: Props) => {
       const sug = filteredSuggestions[itemIndex];
       if (sug) {
         onFinish(sug);
+
       }
     }
 
@@ -51,11 +54,14 @@ export const SuggestionBox = (props: Props) => {
   function onFinish(value: string) {
     props.onFinish(value);
     // todo set manage input to empty
+    setNewCardInput('')
+    setFilteredSuggestions([])
   }
 
   return (
     <>
       <input
+        value={newCardInput}
         onChange={(e) => updateSuggestions(e.target.value)}
         placeholder="Start typing..."
         onKeyDown={(e) => handleKeyDown(e)}
@@ -66,11 +72,11 @@ export const SuggestionBox = (props: Props) => {
           if (si === itemIndex) {
             classNames.push('active');
           }
-          return <a 
+          return <div 
             key={`suggestion-${s}`}
             className={classNames.join(' ')}
             onClick={() => onFinish(s)}
-          >{s}</a>;
+          >{s}</div>;
         })}
       </div>
     </>
